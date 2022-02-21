@@ -1,5 +1,9 @@
 <template>
-  하이용
+  <div class="wrap">
+    <div class="contents">
+      화면
+    </div>
+  </div>
 </template>
 
 <script>
