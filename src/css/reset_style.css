@@ -1,0 +1,4 @@
+* {-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+body {margin: 0; padding: 0;}
+table {border-collapse: collapse; border-spacing: 0;}
+a, button, input[type="submit"] {color: inherit; border: 0; background: transparent; text-decoration: none;}
