@@ -1,72 +1,40 @@
 <template>
   <div class="wrap">
     <h1><a href="/">블루 스테이션</a></h1>
+    <button @click="save()">저장</button>
     <div class="contents-wrap">
       <section class="contents01">
-        <div class="flip-card">
+        <div class="flip-card" v-for="(post, index) in posts.slice(0,1)" :key="index">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="https://1417094351.rsc.cdn77.org/articles/2120/2119837/thumbnail/large.gif" />
             </div>
             <div class="flip-card-back">
-              <a href="#">contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01
-                contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01
-                contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01
-                contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01contents01</a>
+              <a href="{{post.link}}">{{ post.contents }}</a>
             </div>
           </div>
         </div>
       </section>
       <section class="contents02">
-        <div class="flip-card">
+        <div class="flip-card" v-for="(post, index) in posts.slice(1,3)" :key="index">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <img src="https://cdna.artstation.com/p/assets/covers/images/021/227/574/large/reika-yoshino-thumbnail03.jpg" />
+              <img src="https://1417094351.rsc.cdn77.org/articles/2120/2119837/thumbnail/large.gif" />
             </div>
             <div class="flip-card-back">
-              <a href="#">contents02</a>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="https://cdna.artstation.com/p/assets/covers/images/021/227/574/large/reika-yoshino-thumbnail03.jpg" />
-            </div>
-            <div class="flip-card-back">
-              <a href="#">contents02</a>
+              <a href="{{post.link}}">{{ post.contents }}</a>
             </div>
           </div>
         </div>
       </section>
       <section class="contents03">
-        <div class="flip-card">
+        <div class="flip-card" v-for="(post, index) in posts.slice(3)" :key="index">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <img src="https://anderbot.com/wp-content/uploads/2021/10/Sky-Children-of-the-Light-2.jpg" />
+              <img src="https://1417094351.rsc.cdn77.org/articles/2120/2119837/thumbnail/large.gif" />
             </div>
             <div class="flip-card-back">
-              <a href="#">contents03</a>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="https://anderbot.com/wp-content/uploads/2021/10/Sky-Children-of-the-Light-2.jpg" />
-            </div>
-            <div class="flip-card-back">
-              <a href="#">contents03</a>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="https://anderbot.com/wp-content/uploads/2021/10/Sky-Children-of-the-Light-2.jpg" />
-            </div>
-            <div class="flip-card-back">
-              <a href="#">contents03</a>
+              <a href="{{post.link}}">{{ post.contents }}</a>
             </div>
           </div>
         </div>
@@ -77,12 +45,98 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
+import { isProxy, toRaw } from 'vue';
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, doc, getDoc, addDoc  } from "firebase/firestore";
 
 export default {
   name: 'App',
   components: {
     // HelloWorld
-  }
+  },
+  data: function(){
+    return {
+      db: null,
+      title: 'Test Title',
+      contents: 'Test Contents',
+      posts: [],
+    }
+  },
+  methods: {
+    async getDocs() {
+      for(let i=1; i<=6; i++) {
+        const docRef = doc(this.db, "posts", String(i));
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          let { title, contents, link } = docSnap.data();
+          this.posts.push({
+            title, contents, link
+          });
+
+        } else {
+          this.posts.push({
+            title: '',
+            contents: '',
+            link: '',
+          });
+        }
+      }
+
+      console.log(this.posts);
+      if(isProxy(this.posts)){ //this If() block is not really necessary
+        const rawObject = toRaw(this.posts);
+        console.log(rawObject);
+      }
+    },
+    async save() {
+      try {
+        const docRef = await addDoc(collection(this.db, "users"), {
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+
+
+      // getFirestore().collection("test")
+      //     .doc('title')
+      //     .set({
+      //       title: this.title,
+      //       contents: this.contents,
+      //     })
+      //     .then(function(){
+      //       console.log('saved!');
+      //     })
+      //     .catch(function(e){
+      //       console.log(e);
+      //     });
+    },
+  },
+  mounted() {
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1Nj04HHBeKBHk51hPkSXugVeX5CGAXaQ",
+      authDomain: "vue-bluestation.firebaseapp.com",
+      projectId: "vue-bluestation",
+      storageBucket: "vue-bluestation.appspot.com",
+      messagingSenderId: "945002520472",
+      appId: "1:945002520472:web:5401664e8bf0eadbf0d5ed"
+    };
+
+    // Initialize Firebase
+    initializeApp(firebaseConfig);
+
+    this.db = getFirestore();
+
+    this.getDocs();
+
+    // const usersRef = collection(this.db, "users");
+    // console.log(usersRef);
+  },
 }
 </script>
 
