@@ -33,6 +33,7 @@
 import {initializeApp} from "firebase/app";
 import {updateDoc, doc, getDoc, getFirestore} from "firebase/firestore";
 import {isProxy, toRaw} from "vue";
+import firebaseConfig from '../../firebase_config';
 
 export default {
   name: "AdminView",
@@ -86,15 +87,6 @@ export default {
   },
   mounted() {
     // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyD1Nj04HHBeKBHk51hPkSXugVeX5CGAXaQ",
-      authDomain: "vue-bluestation.firebaseapp.com",
-      projectId: "vue-bluestation",
-      storageBucket: "vue-bluestation.appspot.com",
-      messagingSenderId: "945002520472",
-      appId: "1:945002520472:web:5401664e8bf0eadbf0d5ed"
-    };
-
     // Initialize Firebase
     initializeApp(firebaseConfig);
 
