@@ -1,8 +1,12 @@
 <template>
   <div id="admin">
     <div v-show="!loginOk">
-      <input type="password" v-model="password">
+      <input type="name" v-model="userId" placeholder="ID를 입력해주세요.">
+      <input type="password" v-model="userPw" placeholder="비밀번호를 입력해주세요.">
       <button @click="login()">Login</button>
+      <div>
+          <small style="color:red;">{{ loginErrMsg }}</small>
+      </div>
     </div>
     <div v-show="loginOk">
       <div>
@@ -43,6 +47,7 @@ import {initializeApp} from "firebase/app";
 import {updateDoc, doc, getDoc, getFirestore} from "firebase/firestore";
 import {isProxy, toRaw} from "vue";
 import firebaseConfig from '../../firebase_config';
+import adminConfig from '../../admin_config';
 
 export default {
   name: "AdminView",
@@ -50,14 +55,26 @@ export default {
     return {
       db: null,
       posts: [],
-      password: '',
+      userId: '',
+      userPw: '',
       loginOk: false,
+      loginErrMsg: '',
     }
   },
   methods: {
     login() {
-        if(this.password === 'blue'){
+        if(this.userId !== adminConfig.id) {
+          this.loginErrMsg = '올바른 ID가 아닙니다. x_x';
+          return false;
+        }
+        if(this.userPw !== adminConfig.pw) {
+          this.loginErrMsg = '올바른 비밀번호가 아닙니다. x_x';
+          return false;
+        }
+
+        if(this.userId === adminConfig.id && this.userPw === adminConfig.pw){
             this.loginOk  = true;
+            this.loginErrMsg = '';
             localStorage.setItem('loginOk', this.loginOk);
         }
     },
