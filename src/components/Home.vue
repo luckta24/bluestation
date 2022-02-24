@@ -1,9 +1,6 @@
 <template>
     <div class="wrap">
       <h1>블루 스테이션</h1>
-      <div>
-        <router-link :to="{ name: 'AdminView' }">Admin</router-link>
-      </div>
       <div class="contents-wrap">
         <section class="contents01">
           <div class="flip-card" v-for="(post, index) in posts.slice(0,1)" :key="index">
@@ -47,7 +44,8 @@
       </div>
       <router-view />
       <div class="footer">
-        copyright&copy; 2022 All rights reserved by BLUE
+        copyright&copy; 2022 All rights reserved by BLUE<br>
+        <i><router-link :to="{ name: 'AdminView' }">Admin</router-link></i>
       </div>
     </div>
 </template>
@@ -233,6 +231,10 @@ export default {
 .footer {
   text-align: center;
   margin-top: 30px;
+}
+.footer i a {
+  color: #000000;
+  opacity: 0.01;
 }
 
 /*--------768px 해상도---------*/
