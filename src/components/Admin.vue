@@ -106,7 +106,7 @@ export default {
         }
       }
 
-      console.log(this.posts);
+      // console.log(this.posts);
       if(isProxy(this.posts)){ //this If() block is not really necessary
         toRaw(this.posts);
       }
