@@ -9,7 +9,7 @@
           <div class="flip-card" v-for="(post, index) in posts.slice(0,1)" :key="index">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="https://1417094351.rsc.cdn77.org/articles/2120/2119837/thumbnail/large.gif" />
+                <img src="https://github.com/luckta24/bluestation/blob/main/img/1.jpg?raw=true" />
               </div>
               <div class="flip-card-back">
                 <a :href="post.link" target="_blank">{{ post.contents }}</a>
@@ -21,7 +21,8 @@
           <div class="flip-card" v-for="(post, index) in posts.slice(1,3)" :key="index">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="https://1417094351.rsc.cdn77.org/articles/2120/2119837/thumbnail/large.gif" />
+                <img v-if="index === 0" src="https://github.com/luckta24/bluestation/blob/main/img/2.jpg?raw=true" />
+                <img v-if="index === 1" src="https://github.com/luckta24/bluestation/blob/main/img/3.jpg?raw=true" />
               </div>
               <div class="flip-card-back">
                 <a :href="post.link" target="_blank">{{ post.contents }}</a>
@@ -33,7 +34,9 @@
           <div class="flip-card" v-for="(post, index) in posts.slice(3)" :key="index">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="https://1417094351.rsc.cdn77.org/articles/2120/2119837/thumbnail/large.gif" />
+                <img v-if="index === 0" src="https://github.com/luckta24/bluestation/blob/main/img/4.jpg?raw=true" />
+                <img v-if="index === 1" src="https://github.com/luckta24/bluestation/blob/main/img/5.jpg?raw=true" />
+                <img v-if="index === 2" src="https://github.com/luckta24/bluestation/blob/main/img/6.jpg?raw=true" />
               </div>
               <div class="flip-card-back">
                 <a :href="post.link" target="_blank">{{ post.contents }}</a>
