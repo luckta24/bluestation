@@ -18,5 +18,5 @@ const routes = [
 export const router = createRouter({
     history: createWebHistory(),
     routes,
-    mode: 'history'
+    // mode: 'history'
 });

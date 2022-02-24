@@ -1,6 +1,9 @@
 <template>
     <div class="wrap">
       <h1>블루 스테이션</h1>
+      <div>
+        <router-link :to="{ name: 'AdminView' }">Admin</router-link>
+      </div>
       <div class="contents-wrap">
         <section class="contents01">
           <div class="flip-card" v-for="(post, index) in posts.slice(0,1)" :key="index">

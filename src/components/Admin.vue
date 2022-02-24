@@ -1,14 +1,22 @@
 <template>
   <div id="admin">
-    <table>
-      <thead>
+    <div v-show="!loginOk">
+      <input type="password" v-model="password">
+      <button @click="login()">Login</button>
+    </div>
+    <div v-show="loginOk">
+      <div>
+        <router-link :to="{ name: 'HomeView' }">돌아가기</router-link>
+      </div>
+      <table>
+        <thead>
         <th>순서</th>
         <th>타이틀</th>
         <th>내용</th>
         <th>링크</th>
         <th>저장</th>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr v-for="(post, index) in posts" :key="index">
           <td>{{ index+1 }}</td>
           <td>
@@ -24,8 +32,9 @@
             <button @click="saveDoc(post, index)">저장</button>
           </td>
         </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -41,9 +50,17 @@ export default {
     return {
       db: null,
       posts: [],
+      password: '',
+      loginOk: false,
     }
   },
   methods: {
+    login() {
+        if(this.password === 'blue'){
+            this.loginOk  = true;
+            localStorage.setItem('loginOk', this.loginOk);
+        }
+    },
     async getDocs() {
       for(let i=1; i<=6; i++) {
         const docRef = doc(this.db, "posts", String(i));
@@ -96,6 +113,10 @@ export default {
 
     // const usersRef = collection(this.db, "users");
     // console.log(usersRef);
+
+    if(localStorage.getItem('loginOk')) {
+      this.loginOk = localStorage.getItem('loginOk');
+    }
   },
 }
 </script>
