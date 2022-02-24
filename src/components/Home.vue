@@ -1,9 +1,6 @@
 <template>
     <div class="wrap">
       <h1>블루 스테이션</h1>
-      <div>
-        <router-link :to="{ name: 'AdminView' }">Admin</router-link>
-      </div>
       <div class="contents-wrap">
         <section class="contents01">
           <div class="flip-card" v-for="(post, index) in posts.slice(0,1)" :key="index">
@@ -46,6 +43,10 @@
         </section>
       </div>
       <router-view />
+      <div class="footer">
+        copyright&copy; 2022 All rights reserved by BLUE<br>
+        <i><router-link :to="{ name: 'AdminView' }">Admin</router-link></i>
+      </div>
     </div>
 </template>
 
@@ -227,6 +228,14 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.footer {
+  text-align: center;
+  margin-top: 30px;
+}
+.footer i a {
+  color: #000000;
+  opacity: 0.01;
+}
 
 /*--------768px 해상도---------*/
 @media screen and (max-width: 768px) {
@@ -240,13 +249,18 @@ export default {
   .contents-wrap section .flip-card {
     margin: 10px 5px 0 !important;
   }
+  .contents-wrap section.contents01 .flip-card {
+    height: calc(100vw - 18px);
+  }
   .contents-wrap section.contents02 .flip-card {
     float: left;
     width: calc(50% - 10px);
+    height: calc(100vw / 2 - 18px);
   }
   .contents-wrap section.contents03 .flip-card {
     float: left;
     width: calc(100% / 3 - 10px);
+    height: calc(100vw / 3 - 18px);
   }
 }
 </style>
