@@ -12,6 +12,9 @@
       <div>
         <router-link :to="{ name: 'HomeView' }">돌아가기</router-link>
       </div>
+      <div>
+        <button @click="saveAll()">한번에 저장</button>
+      </div>
       <table>
         <thead>
         <th>순서</th>
@@ -22,7 +25,12 @@
         </thead>
         <tbody>
         <tr v-for="(post, index) in posts" :key="index">
-          <td>{{ index+1 }}</td>
+          <td>
+            <div>
+              <span v-if="index > 0" @click="moveUp(index)">▲</span>
+              <span v-if="index != posts.length-1" @click="moveDown(index)">▼</span>
+            </div>
+          </td>
           <td>
             <input type="text" v-model="post.title">
           </td>
@@ -98,7 +106,7 @@ export default {
         }
       }
 
-      // console.log(this.posts);
+      console.log(this.posts);
       if(isProxy(this.posts)){ //this If() block is not really necessary
         toRaw(this.posts);
       }
@@ -112,12 +120,28 @@ export default {
           title: post.title,
           contents: post.contents,
           link: post.link || '',
+          order: index
         });
 
       } catch (e) {
         console.error("Error set document: ", e);
       }
     },
+    saveAll() {
+      this.posts.forEach((post, index)=>{
+          this.saveDoc(post, index);
+      });
+    },
+    moveUp(index) {
+      let prevPostTemp = this.posts[index-1];
+      this.posts[index-1] = this.posts[index];
+      this.posts[index] = prevPostTemp;
+    },
+    moveDown(index) {
+      let nextPostTemp = this.posts[index+1];
+      this.posts[index+1] = this.posts[index];
+      this.posts[index] = nextPostTemp;
+    }
   },
   mounted() {
     // Your web app's Firebase configuration

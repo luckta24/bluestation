@@ -99,6 +99,13 @@ export default {
     // const usersRef = collection(this.db, "users");
     // console.log(usersRef);
   },
+  computed:{
+    orderedPosts: ()=> {
+      return this.posts.sort(function (val1, val2){
+        return val1.order < val2.order;
+      });
+    }
+  },
 }
 </script>
 
