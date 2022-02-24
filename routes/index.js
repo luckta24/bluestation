@@ -9,7 +9,7 @@ const routes = [
         component: HomeView, // 동적 import
     },
     {
-        path: '/admin',
+        path: '/ctawblucke',
         name: 'AdminView',
         component: AdminView, // 동적 import
     },
