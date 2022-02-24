@@ -43,6 +43,9 @@
         </section>
       </div>
       <router-view />
+      <div class="footer">
+        copyright&copy; 2022 All rights reserved by BLUE
+      </div>
     </div>
 </template>
 
@@ -217,6 +220,10 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.footer {
+  text-align: center;
+  margin-top: 30px;
+}
 
 /*--------768px 해상도---------*/
 @media screen and (max-width: 768px) {
@@ -230,13 +237,18 @@ export default {
   .contents-wrap section .flip-card {
     margin: 10px 5px 0 !important;
   }
+  .contents-wrap section.contents01 .flip-card {
+    height: calc(100vw - 18px);
+  }
   .contents-wrap section.contents02 .flip-card {
     float: left;
     width: calc(50% - 10px);
+    height: calc(100vw / 2 - 18px);
   }
   .contents-wrap section.contents03 .flip-card {
     float: left;
     width: calc(100% / 3 - 10px);
+    height: calc(100vw / 3 - 18px);
   }
 }
 </style>
